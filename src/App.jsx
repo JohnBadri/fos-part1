@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
-const Display = ({ text, counter }) => (
+const Display = ({ text, counter, total }) => (
   <p>
     {text}: {counter}
   </p>
@@ -12,22 +12,53 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-
-  const plusOne = (arg) => {};
+  const [total, setTotal] = useState(0);
+  const [positive, setPositive] = useState(0);
+  const [average, setAverage] = useState(0);
 
   const addGood = () => {
-    setGood(good + 1);
-    console.log(good);
+    const updatedGood = good + 1;
+    const total = updatedGood + neutral + bad;
+    const goodBad = updatedGood - bad;
+
+    setGood(updatedGood);
+    setTotal(updatedGood + neutral + bad);
+
+    const avg = goodBad / total;
+    setAverage(avg);
+
+    const positiveAvg = updatedGood / total;
+    setPositive(positiveAvg * 100);
   };
 
   const addNeutral = () => {
-    setNeutral(neutral + 1);
-    console.log(neutral);
+    const updatedNeutral = neutral + 1;
+    const total = good + updatedNeutral + bad;
+    const goodBad = good - bad;
+
+    setNeutral(updatedNeutral);
+    setTotal(updatedNeutral + good + bad);
+
+    const avg = goodBad / total;
+    setAverage(avg);
+
+    const positiveAvg = good / total;
+    setPositive(positiveAvg * 100);
   };
 
   const addBad = () => {
-    setBad(bad + 1);
-    console.log(bad);
+    const updatedBad = bad + 1;
+    const total = good + neutral + updatedBad;
+    const goodBad = good - updatedBad;
+
+    setBad(updatedBad);
+    setTotal(updatedBad + neutral + good);
+
+    const avg = goodBad / total;
+    setAverage(avg);
+
+    const positiveAvg = good / total;
+    setPositive(positiveAvg * 100);
   };
 
   return (
@@ -40,6 +71,9 @@ const App = () => {
       <Display text="Good" counter={good} />
       <Display text="Neutral" counter={neutral} />
       <Display text="Bad" counter={bad} />
+      <Display text="Total" counter={total} />
+      <Display text="Average" counter={average} />
+      <Display text="Positive" counter={positive} />
     </div>
   );
 };
