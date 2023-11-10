@@ -8,17 +8,25 @@ const Display = ({ text, counter }) => (
   </p>
 );
 
-const Statistics = ({ good, neutral, bad, total, average, positive }) => (
-  <div>
-    <h1>Statistics</h1>
-    <Display text="Good" counter={good} />
-    <Display text="Neutral" counter={neutral} />
-    <Display text="Bad" counter={bad} />
-    <Display text="Total" counter={total} />
-    <Display text="Average" counter={average} />
-    <Display text="Positive" counter={positive} />
-  </div>
-);
+const Statistics = ({ good, neutral, bad, total, average, positive }) => {
+  if (good || neutral || bad) {
+    return (
+      <div>
+        <Display text="Good" counter={good} />
+        <Display text="Neutral" counter={neutral} />
+        <Display text="Bad" counter={bad} />
+        <Display text="Total" counter={total} />
+        <Display text="Average" counter={average} />
+        <Display text="Positive" counter={positive} />
+      </div>
+    );
+  }
+  return (
+    <div>
+      <p>No Feedback Given</p>
+    </div>
+  );
+};
 
 const App = () => {
   const [good, setGood] = useState(0);
