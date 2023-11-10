@@ -2,10 +2,22 @@ import { useState } from 'react';
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
-const Display = ({ text, counter, total }) => (
+const Display = ({ text, counter }) => (
   <p>
     {text}: {counter}
   </p>
+);
+
+const Statistics = ({ good, neutral, bad, total, average, positive }) => (
+  <div>
+    <h1>Statistics</h1>
+    <Display text="Good" counter={good} />
+    <Display text="Neutral" counter={neutral} />
+    <Display text="Bad" counter={bad} />
+    <Display text="Total" counter={total} />
+    <Display text="Average" counter={average} />
+    <Display text="Positive" counter={positive} />
+  </div>
 );
 
 const App = () => {
@@ -68,12 +80,14 @@ const App = () => {
       <Button onClick={addNeutral} text={'Neutral'} />
       <Button onClick={addBad} text={'Bad'} />
       <h1>Statistics</h1>
-      <Display text="Good" counter={good} />
-      <Display text="Neutral" counter={neutral} />
-      <Display text="Bad" counter={bad} />
-      <Display text="Total" counter={total} />
-      <Display text="Average" counter={average} />
-      <Display text="Positive" counter={positive} />
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        total={total}
+        average={average}
+        positive={positive}
+      />
     </div>
   );
 };
