@@ -60,15 +60,35 @@ const App = () => {
     setAnecdotes(updatedAnecdotes);
   };
 
+  const highestAnecdoate = () => {
+    const updatedAnecdotes = { ...anecdotes };
+    const anecdote = updatedAnecdotes.sort((a, b) => a - b);
+    const highestNumber = anecdote[anecdote.length - 1];
+    return highestNumber.anecdote;
+  };
+
+  const highestAnecdote = () => {
+    const anecdoteArray = Object.values(anecdotes);
+
+    const highestNumber = anecdoteArray.reduce((max, current) => {
+      return current.points > max.points ? current : max;
+    }, anecdoteArray[0]);
+
+    return highestNumber.anecdote;
+  };
+
   const displayAnecdote = anecdotes[selected].anecdote;
   const points = anecdotes[selected].points;
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{displayAnecdote}</p>
       <p>Has {points} votes</p>
       <Button onClick={voteForAnecdote} quote={'Vote'} />
       <Button onClick={selectQuote} quote={'Next Anecdote'} />
+      <h1>Anecdote with the most votes</h1>
+      <p>{highestAnecdote()}</p>
     </div>
   );
 };
