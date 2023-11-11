@@ -1,107 +1,32 @@
 import { useState } from 'react';
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
-
-const StatisticLine = ({ text, counter }) => {
-  return (
-    <tr>
-      <td>
-        {text}: {counter}
-      </td>
-    </tr>
-  );
-};
-
-const Statistics = ({ good, neutral, bad, total, average, positive }) => {
-  if (good || neutral || bad) {
-    return (
-      <table>
-        <tbody>
-          <StatisticLine text="Good" counter={good} />
-          <StatisticLine text="Neutral" counter={neutral} />
-          <StatisticLine text="Bad" counter={bad} />
-          <StatisticLine text="Total" counter={total} />
-          <StatisticLine text="Average" counter={average} />
-          <StatisticLine text="Positive" counter={positive} />
-        </tbody>
-      </table>
-    );
-  }
-  return (
-    <div>
-      <p>No Feedback Given</p>
-    </div>
-  );
+const RandomQuote = ({ onClick, quote }) => {
+  return <button onClick={onClick}>{quote}</button>;
 };
 
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [positive, setPositive] = useState(0);
-  const [average, setAverage] = useState(0);
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.',
+  ];
 
-  const addGood = () => {
-    const updatedGood = good + 1;
-    const total = updatedGood + neutral + bad;
-    const goodBad = updatedGood - bad;
+  const [selected, setSelected] = useState(0);
 
-    setGood(updatedGood);
-    setTotal(updatedGood + neutral + bad);
-
-    const avg = goodBad / total;
-    setAverage(avg);
-
-    const positiveAvg = updatedGood / total;
-    setPositive(positiveAvg * 100);
-  };
-
-  const addNeutral = () => {
-    const updatedNeutral = neutral + 1;
-    const total = good + updatedNeutral + bad;
-    const goodBad = good - bad;
-
-    setNeutral(updatedNeutral);
-    setTotal(updatedNeutral + good + bad);
-
-    const avg = goodBad / total;
-    setAverage(avg);
-
-    const positiveAvg = good / total;
-    setPositive(positiveAvg * 100);
-  };
-
-  const addBad = () => {
-    const updatedBad = bad + 1;
-    const total = good + neutral + updatedBad;
-    const goodBad = good - updatedBad;
-
-    setBad(updatedBad);
-    setTotal(updatedBad + neutral + good);
-
-    const avg = goodBad / total;
-    setAverage(avg);
-
-    const positiveAvg = good / total;
-    setPositive(positiveAvg * 100);
+  const selectQuote = () => {
+    const randomNumber = Math.ceil(Math.random() * 7);
+    setSelected(randomNumber);
   };
 
   return (
     <div>
-      <h1>Give Feedback</h1>
-      <Button onClick={addGood} text={'Good'} />
-      <Button onClick={addNeutral} text={'Neutral'} />
-      <Button onClick={addBad} text={'Bad'} />
-      <h1>Statistics</h1>
-      <Statistics
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        total={total}
-        average={average}
-        positive={positive}
-      />
+      <p>{anecdotes[selected]}</p>
+      <RandomQuote onClick={selectQuote} quote={'Next Anecdote'} />
     </div>
   );
 };
